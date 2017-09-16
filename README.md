@@ -1,28 +1,31 @@
-NOTE: please fill in the first section with information about your game.
+# Cave Explorer
 
-# *Game Title*
+Cave Explorer is Brian Xiao's implementation of Adriel Luo's [*Design Document*](http://graphics.cs.cmu.edu/courses/15-466-f17/game1-designs/aluo) for game1 in 15-466-f17.
 
-*Game Title* is *Your Name*'s implementation of [*Design Document*](http://graphics.cs.cmu.edu/courses/15-466-f17/game1-designs/put-real-link-here) for game1 in 15-466-f17.
-
-*Include a Screenshot Here*
-
-## Build Notes
-
-*Include any special notes or steps required to build your game here. If there are no special notes, delete this section.*
+![](https://github.com/0aix/15-466-f17-base1/blob/master/screenshots/cave-explorer.png?raw=true)
 
 ## Asset Pipeline
 
-*Briefly describe the asset pipeline for this game. What sorts of source files are used? How are they processed? How are they loaded?*
+The only asset is used is an atlas/spritesheet courtesy of [Kenney.nl](http://kenney.nl/assets/roguelike-rpg-pack). 
+
+Because I only use 10 sprites from the spritesheet, and each sprite is 16x16 and lined up, I hardcode the uv-coordinates for each sprite. The SpriteInfo objects are loaded before the game loop is entered. 
 
 ## Architecture
 
-*Provide a brief introduction to how you implemented the design. Talk about the basic structure of your code.*
+I implemented the map as a 2D-array of tile types. Unfortunately, these are hard-coded as I felt randomly generating a map would be too difficult. I also have a corresponding 'lit' 2D-array that determines whether or not the tile has been stepped on and therefore lit. Otherwise, these tiles are rendered as a "dirt wall" tile. 
+
+There are a number of states that the minecart (player) can take. These are horizontal stationary; moving left; moving right; vertical stationary; moving up; moving down; and all of those but with gold. 
+
+Input takes in only left, right, up, down, and space and only does anything in stationary states. 
+Space will check for gold surrounding the player and attempt to 'mine' the gold. If the gold is *actually* gold, then the player wins; otherwise, the gold bars turn into logs. (This is done by probability: 1/#-of-gold-left)
+
+The game state is checked each iteration to see if the player should still be moving on a track or if the player should stop. When the player is stopped, it will check if gold is in the surrounding blocks, and if so, reveal it. 
 
 ## Reflection
 
-*Reflect on the assignment. What was difficult? What worked well? If you were doing it again, what would you change?*
+If I were doing it again, I would make the game more difficult and add randomization as well as different mechanics. 
 
-*Reflect on the design document. What was clear and what was ambiguous? How did you resolve the ambiguities?*
+The design document was clear on mostly everything except the map/grid layout. I had to make some amenities and stretch things out (making walls actual tiles so the map was 2x as big as in the design document).
 
 
 # About Base1
